@@ -1,0 +1,76 @@
+<mat-card *ngIf="airplane">
+    <mat-card-header>
+        <div [hidden]="!hidden">
+            <mat-card-title>Модель: {{airplane.model}}</mat-card-title>
+            <mat-card-subtitle>Тип: {{airplane.type}}</mat-card-subtitle> 
+            <mat-card-subtitle>Бортовой номер:{{airplane.number}}</mat-card-subtitle> 
+            <mat-card-subtitle>Код судна:{{airplane.code}}</mat-card-subtitle>
+            <mat-card-subtitle>Марка самолета: {{airplane.mark}}</mat-card-subtitle>
+        </div>
+    </mat-card-header>
+
+<mat-accordion [hidden]="!hidden">        
+    <mat-expansion-panel>
+        <mat-expansion-panel-header  (click)=this.getPilotsNames(airplane.pilots)>
+        <mat-panel-title>
+            Смотреть пилотов {{airplane.pilots.length}}
+        </mat-panel-title>      
+        </mat-expansion-panel-header>
+        <div *ngFor="let pilot of pilots" class="card-line-list" (click)=passPilot(pilot)>
+            <div>{{pilot.name.first}} {{pilot.name.last}}</div>
+        </div>
+  </mat-expansion-panel>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header (click)=this.getAirportsNames(airplane.airports)>
+    <mat-panel-title>
+        Смотреть аэропорты {{airplane.airports.length}}
+    </mat-panel-title>      
+    </mat-expansion-panel-header>
+    <div *ngFor="let airport of airports" class="card-line-list" (click)=passAirport(airport)>
+        <div>{{airport.name}} {{airport.address}}</div>
+    </div>
+    </mat-expansion-panel>
+</mat-accordion>
+<div [hidden]="hidden" class="card-edit-form">    
+    <form (ngSubmit)="saveCard()" #airplaneForm="ngForm">
+         <mat-form-field hintLabel="Max 50 characters" appearance="fill">
+             <mat-label>Модель:</mat-label>
+             <input matInput #input maxlength="50" type="text" class="form-control" id="model"
+             required [(ngModel)]="airplane.model" name="model"
+             #model="ngModel" placeholder="Модель" required>        
+         </mat-form-field>
+         <mat-form-field appearance="fill">
+             <mat-label>Тип:</mat-label>
+             <input matInput #input class="form-control" id="type"
+             required [(ngModel)]="airplane.type" name="type"
+             #type="ngModel" placeholder="Тип" type="text" required>        
+         </mat-form-field>
+         <mat-form-field appearance="fill">
+            <mat-label>Бортовой номер:</mat-label>
+            <input matInput #input class="form-control" id="number"
+            required [(ngModel)]="airplane.number" name="number"
+            #number="ngModel" placeholder="Номер" type="text" required>        
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Марка:</mat-label>
+            <input matInput #input class="form-control" id="mark"
+            required [(ngModel)]="airplane.mark" name="mark"
+            #mark="ngModel" placeholder="Марка" type="text" required>        
+        </mat-form-field>
+         <mat-form-field appearance="fill">
+             <mat-label>Код:</mat-label>
+             <input matInput #input type="text" class="form-control" id="code"
+             required [(ngModel)]="airplane.code" name="code"
+             #code="ngModel"  placeholder="Код" required>        
+         </mat-form-field>
+         <br>
+         <button mat-button type="submit" [disabled]="!airplaneForm.valid">Сохранить</button>        
+     </form> 
+ </div>
+<mat-card-actions>
+    <div [hidden]="!hidden">
+        <button mat-button (click)="editCard()">Редактировать</button>
+    </div>
+</mat-card-actions>
+</mat-card>
+

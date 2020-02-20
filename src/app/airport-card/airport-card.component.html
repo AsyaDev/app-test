@@ -1,0 +1,61 @@
+<mat-card *ngIf="airport" >
+    <div [hidden]="!hidden">
+        <mat-card-header>
+            <mat-card-title>{{airport.name}}</mat-card-title>
+            <mat-card-subtitle>{{airport.code}}</mat-card-subtitle> 
+            <mat-card-subtitle>{{airport.address}}</mat-card-subtitle> 
+        </mat-card-header>
+    </div>
+<mat-accordion [hidden]="!hidden">        
+    <mat-expansion-panel>
+        <mat-expansion-panel-header  (click)=this.getPilotsNames(airport.pilots)>
+        <mat-panel-title>
+            Смотреть пилотов {{airport.pilots.length}}
+        </mat-panel-title>      
+        </mat-expansion-panel-header>
+        <div *ngFor="let pilot of pilots" class="card-line-list" (click)=passPilot(pilot)>
+            <div>{{pilot.name.first}} {{pilot.name.last}}</div>
+        </div>
+  </mat-expansion-panel>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header (click)=this.getPlanesNames(airport.planes)>
+    <mat-panel-title>
+        Смотреть самолеты {{airport.planes.length}}
+    </mat-panel-title>      
+    </mat-expansion-panel-header>
+    <div *ngFor="let plane of planes" class="card-line-list" (click)=passPlane(plane)>
+        <div>{{plane.model}} {{plane.type}}</div>
+    </div>
+    </mat-expansion-panel>
+</mat-accordion>
+<div [hidden]="hidden" class="card-edit-form">    
+   <form (ngSubmit)="saveCard()" #airportForm="ngForm">
+        <mat-form-field hintLabel="Max 50 characters" appearance="fill">
+            <mat-label>Название:</mat-label>
+            <input matInput #input maxlength="50" type="text" class="form-control" id="name"
+            required [(ngModel)]="airport.name" name="name"
+            #name="ngModel" placeholder="Название" required>       
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Код:</mat-label>
+            <input matInput #input class="form-control" id="code"
+            required [(ngModel)]="airport.code" name="code"
+            #code="ngModel" placeholder="Код" type="text" required>        
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Адрес:</mat-label>
+            <input matInput #input type="text" class="form-control" id="address"
+            required [(ngModel)]="airport.address" name="address"
+            #address="ngModel"  placeholder="Адрес" required>        
+        </mat-form-field>
+        <br>
+        <button mat-button type="submit" [disabled]="!airportForm.valid">Сохранить</button>        
+    </form> 
+</div>
+<mat-card-actions>
+    <div [hidden]="!hidden">
+        <button mat-button (click)="editCard()">Редактировать</button>
+    </div>
+</mat-card-actions>
+</mat-card>
+

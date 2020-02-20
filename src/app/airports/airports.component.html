@@ -1,0 +1,19 @@
+<pagination-controls (pageChange)="pageChange($event)" id="first"></pagination-controls>
+<mat-list role="list">
+    <mat-list-item role="listitem" *ngFor="let airport of airports | paginate: config">  
+        <div [routerLink]="['airport/',airport.id]" (click)=passItem(airport)>     
+            <div matLine>  
+                <span>Название: {{airport.name}}</span>
+                <span>Код: {{airport.code}}</span>
+                <span>Адрес: {{airport.address}}</span>               
+            </div>  
+            <div matLine>     
+                <span>Прикрепленные пилоты: {{airport.pilots.length}}</span>
+                <span>Прикрепленные самолеты: {{airport.planes.length}}</span>
+            </div>
+        </div>
+        <i class="material-icons custom-position" (click)="openDialog(airport)"> delete_outline </i>
+        <mat-divider></mat-divider>  
+    </mat-list-item>
+</mat-list>
+ 

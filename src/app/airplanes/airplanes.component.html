@@ -1,0 +1,18 @@
+<pagination-controls (pageChange)="pageChange($event)" id="second"></pagination-controls>
+<mat-list role="list">
+    <mat-list-item role="listitem" *ngFor="let plane of planes | paginate: config" [style.background-color]="getBackgroundColor(plane) ? 'green' : 'transparent'">
+        <div [routerLink]="['airplane/',plane.id]" (click)=passItem(airplane)>     
+            <div matLine>  
+                Код: {{plane.code}}
+                Номер: {{plane.number}}
+            </div>
+            <div matLine>  
+                Тип: {{plane.type}}
+                Марка: {{plane.mark}}
+                Модель: {{plane.model}}  
+            </div>
+        </div>
+        <i class="material-icons custom-position" (click)="openDialog(plane)"> delete_outline </i>
+        <mat-divider></mat-divider>      
+    </mat-list-item>
+</mat-list>

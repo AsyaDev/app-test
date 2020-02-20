@@ -1,0 +1,74 @@
+<mat-card *ngIf="pilot">
+    <mat-card-header>
+        <div [hidden]="!hidden">
+        <mat-card-title>Имя: {{pilot.name.first}} Фамилия: {{pilot.name.last}}</mat-card-title>
+        <mat-card-subtitle>Адрес:{{pilot.address}}</mat-card-subtitle> 
+        <mat-card-subtitle>Код:{{pilot.code}}</mat-card-subtitle>
+        <mat-card-subtitle>Номер: {{pilot.number}}</mat-card-subtitle>
+    </div>  
+    </mat-card-header>
+<mat-accordion [hidden]="!hidden">        
+    <mat-expansion-panel>
+        <mat-expansion-panel-header (click)=this.getPlanesNames(pilot.planes)>
+        <mat-panel-title>
+            Смотреть самолеты {{pilot.planes.length}}
+        </mat-panel-title>      
+        </mat-expansion-panel-header>
+        <div *ngFor="let plane of airplanes" class="card-line-list" (click)=passPlane(plane)>
+            <div>{{plane.model}} {{plane.type}}</div>
+        </div>
+  </mat-expansion-panel>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header (click)=this.getAirportsNames(pilot.airports)>
+    <mat-panel-title>
+        Смотреть аэропорты {{pilot.airports.length}}
+    </mat-panel-title>      
+    </mat-expansion-panel-header>
+    <div *ngFor="let airport of airports" class="card-line-list" (click)=passAirport(airport)>
+        <div>{{airport.name}} {{airport.address}}</div>
+    </div>
+    </mat-expansion-panel>
+</mat-accordion>
+<div [hidden]="hidden" class="card-edit-form">    
+    <form (ngSubmit)="saveCard()" #pilotForm="ngForm">
+         <mat-form-field appearance="fill">
+             <mat-label>Имя:</mat-label>
+             <input matInput #input type="text" class="form-control" id="firstname"
+             required [(ngModel)]="pilot.name.first" name="firstname"
+             #firstname="ngModel" placeholder="Имя" required>  
+         </mat-form-field>
+         <mat-form-field appearance="fill">
+             <mat-label>Фамилия:</mat-label>
+             <input matInput #input class="form-control" id="lastname"
+             required [(ngModel)]="pilot.name.last" name="lastname"
+             #lastname="ngModel" placeholder="Фамилия" type="text" required>        
+         </mat-form-field>
+         <mat-form-field appearance="fill">
+             <mat-label>Адрес:</mat-label>
+             <input matInput #input type="text" class="form-control" id="address"
+             required [(ngModel)]="pilot.address" name="address"
+             #address="ngModel"  placeholder="Адрес" required>        
+         </mat-form-field>
+         <mat-form-field appearance="fill">
+            <mat-label>Код:</mat-label>
+            <input matInput #input class="form-control" id="code"
+            required [(ngModel)]="pilot.code" name="code"
+            #code="ngModel" placeholder="Код" type="text" required>        
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Номер:</mat-label>
+            <input matInput #input class="form-control" id="number"
+            required [(ngModel)]="pilot.number" name="number"
+            #number="ngModel" placeholder="Номер" type="text" required>        
+        </mat-form-field>
+         <br>
+         <button mat-button type="submit" [disabled]="!pilotForm.valid">Сохранить</button>        
+     </form> 
+ </div>
+<mat-card-actions>
+    <div [hidden]="!hidden">
+        <button mat-button (click)="editCard()">Редактировать</button>
+    </div>
+</mat-card-actions>
+</mat-card>
+

@@ -1,0 +1,19 @@
+<pagination-controls (pageChange)="pageChange($event)" id="third"></pagination-controls>
+<mat-list role="list">
+    <mat-list-item role="listitem" *ngFor="let pilot of pilots | paginate: config">
+        <div [routerLink]="['pilot/',pilot.id]" (click)=passItem(pilot)>     
+            <div matLine>  
+                <span>Имя: {{pilot.name.first}}</span>
+                <span>Фамилия: {{pilot.name.last}}</span>
+                <span>Адрес: {{pilot.address}}</span>
+                <span>Код: {{pilot.number}}</span>
+            </div>  
+            <div matLine>     
+                <span>Прикрепленные аэропорты: {{pilot.airports.length}}</span>
+                <span>Прикрепленные самолеты: {{pilot.planes.length}}</span>
+            </div>
+        </div>
+        <i class="material-icons custom-position" (click)="openDialog(pilot)"> delete_outline </i>
+        <mat-divider></mat-divider>  
+    </mat-list-item>
+</mat-list>
